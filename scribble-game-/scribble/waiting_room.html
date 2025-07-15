@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waiting Room</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+  <style>
+    .glow-border {
+      box-shadow: 0 0 15px #a855f7, 0 0 25px #7e22ce;
+      border: 2px solid #c084fc;
+    }
+    .player-badge {
+      display: inline-block;
+      margin-left: 8px;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: bold;
+    }
+    .host-badge {
+      background: linear-gradient(to right, #c084fc, #a855f7);
+      color: white;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+  </style>
+</head>
+<body class="bg-gray-950 text-white min-h-screen flex items-center justify-center p-6 relative">
+
+  <!-- Fun Doodles -->
+  <div class="doodle top-10 left-10 text-6xl float-animation">🎨</div>
+  <div class="doodle bottom-10 right-10 text-5xl wiggle-animation" style="animation-delay: 1s;">✏️</div>
+
+  <div class="bg-gradient-to-br from-gray-800 to-black p-8 rounded-3xl shadow-2xl w-full max-w-2xl border-4 border-yellow-400 scribble-border">
+    <h1 class="text-yellow-300 text-4xl title-font mb-4 text-center">⏳ Waiting Room</h1>
+
+    <div class="mb-6 text-center">
+      <p class="text-lg"><strong>Room:</strong> <span id="roomName"></span></p>
+      <p class="text-lg"><strong>Code:</strong> <span id="roomCode"></span></p>
+      <p class="text-lg"><strong>Duration:</strong> <span id="roundDuration"></span> sec</p>
+      <p class="text-lg"><strong>Password:</strong> <span id="roomPassword"></span></p>
+    </div>
+
+    <div class="mb-8">
+      <h2 class="text-2xl font-bold text-blue-300 mb-3">👥 Players Joined (<span id="playerCount">0</span>)</h2>
+      <ul id="playerList" class="space-y-2 text-lg">
+        <!-- Populated by JS -->
+      </ul>
+    </div>
+
+    <button id="startGameBtn" class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-4 rounded-xl transition duration-300">
+      🚀 Start Game
+    </button>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const roomName = params.get("roomName") || "Unknown Room";
+    const roomCode = params.get("room") || "------";
+    const duration = params.get("duration") || "--";
+    const password = params.get("password") || "****";
+    const hostName = params.get("name") || "Host";
+
+    // Display room info
+    document.getElementById("roomName").textContent = roomName;
+    document.getElementById("roomCode").textContent = roomCode;
+    document.getElementById("roundDuration").textContent = duration;
+    document.getElementById("roomPassword").textContent = password;
+
+    // Simulated Players (host + others)
+    const players = [hostName, "@DoodleFan", "@SketchStar", "@ColorSplash"];
+    const playerList = document.getElementById("playerList");
+    const playerCount = document.getElementById("playerCount");
+
+    playerCount.textContent = players.length;
+
+    players.forEach((player, i) => {
+      const li = document.createElement("li");
+      li.className = `px-4 py-3 rounded-xl flex items-center justify-between ${i === 0 ? 'bg-purple-800 glow-border font-bold text-white' : 'bg-gray-800 border border-gray-600'}`;
+      li.innerHTML = `<span>${player}</span>` + (i === 0 ? `<span class='player-badge host-badge'>Host ✨</span>` : "");
+      playerList.appendChild(li);
+    });
+
+    // Redirect to game
+    document.getElementById("startGameBtn").addEventListener("click", () => {
+      window.location.href = "main_lobby.html";
+    });
+  </script>
+</body>
+</html>
