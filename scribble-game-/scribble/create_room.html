@@ -40,20 +40,36 @@
     class="w-full bg-red-900 border-3 border-red-500 text-white font-bold px-4 py-3 rounded-xl placeholder-white appearance-none" />
 </div>
 
-
-<!-- Round Duration -->
+<!-- Total Rounds -->
 <div class="mb-5">
-  <label class="block mb-2 font-bold text-lg">Round Duration (in sec):</label>
+  <label class="block mb-2 font-bold text-lg">Total Rounds:</label>
   <input
     type="number"
-    id="roundDuration"
-    placeholder="e.g., 90"
-    min="10"
-    max="600"
-    class="appearance-none bg-orange-900 text-white placeholder-white border-4 border-orange-500 font-bold w-full px-4 py-3 rounded-xl focus:outline-none focus:border-orange-300 transition duration-300"
-    style="background-color: #7c2d12; color: white;"
+    id="roundCount"
+    placeholder="e.g. 5"
+    min="1"
+    max="20"
+    class="w-full bg-orange-900 border-3 border-orange-500 text-white font-bold px-4 py-3 rounded-xl focus:outline-none focus:border-orange-300 text-lg placeholder-white appearance-none"
   >
 </div>
+
+
+<!-- Total Rounds -->
+<div class="mb-5">
+  <label class="block mb-2 font-bold text-lg">Total Rounds:</label>
+  <input
+    type="number"
+    id="roundCount"
+    placeholder="e.g. 5"
+    min="1"
+    max="20"
+    inputmode="numeric"
+    class="w-full text-white placeholder-white font-bold px-4 py-3 rounded-xl border-4 border-orange-500 bg-orange-900 focus:outline-none focus:border-orange-300 text-lg appearance-none"
+    style="background-color: #7c2d12 !important; color: white !important;"
+  >
+</div>
+
+
 
 
     <!-- Host Name -->
