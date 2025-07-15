@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scribble Party!</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="tailwind.min.css">
     <link rel="stylesheet" href="./index.css">
 </head>
 <body class="min-h-screen paper-texture relative">
-    <!-- Floating Doodles --> 
+    <!-- Floating Doodles  --> 
     <div class="doodle top-10 left-10 text-6xl float-animation" style="transform: scale(1.1);">✏️</div>
     <div class="doodle top-20 right-20 text-4xl wiggle-animation" style="animation-delay: 0.5s; transform: scale(1.1);">🎨</div>
     <div class="doodle bottom-20 left-20 text-5xl float-animation" style="animation-delay: 1s; transform: scale(1.1);">📝</div>
@@ -104,28 +104,52 @@
                     <input type="text" id="roomName" class="w-full bg-blue-900 border-3 border-blue-500 text-white font-bold px-6 py-4 rounded-2xl focus:border-blue-300 focus:outline-none text-lg transition-all duration-300 hover:shadow-lg" placeholder="My Awesome Room!" required="">
                 </div>
                 
-                <!-- Room Code -->
-                <div class="relative">
-                    <label class="block text-white font-bold mb-3 text-lg flex items-center space-x-2">
-                        <span>🔐</span>
-                        <span>Room Code</span>
-                    </label>
-                    <input type="text" id="roomCode" class="w-full bg-yellow-900 border-3 border-yellow-400 text-white font-bold px-6 py-4 rounded-2xl focus:border-yellow-300 focus:outline-none text-lg" placeholder="AUTO123">
-                </div>
+              <!-- Room Code -->
+<div class="relative">
+  <label class="block text-white font-bold mb-3 text-lg flex items-center space-x-2">
+    <span>🔐</span>
+    <span>Room Code</span>
+  </label>
+  <div class="flex">
+    <input
+      type="text"
+      id="roomCode"
+      readonly
+      class="w-full bg-yellow-900 border-3 border-yellow-400 text-white font-bold px-6 py-4 rounded-l-2xl focus:outline-none text-lg transition-all duration-300 hover:shadow-lg"
+      placeholder="Generating..."
+    />
+    <button
+      id="copyRoomCodeBtn"
+      type="button"
+      class="bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-4 py-4 rounded-r-2xl transition-all duration-300"
+      title="Copy Room Code"
+    >
+      📋
+    </button>
+  </div>
+</div>
+
  
-                <!-- Round Duration -->
-                <div class="relative">
-                    <label class="block text-white font-bold mb-3 text-lg flex items-center space-x-2">
-                        <span>⏱️</span>
-                        <span>Round Duration</span>
-                    </label>
-                    <select id="roundDuration" class="w-full bg-orange-900 border-3 border-orange-500 text-white font-bold px-6 py-4 rounded-2xl focus:border-orange-300 focus:outline-none text-lg transition-all duration-300 hover:shadow-lg">
-                        <option value="60">60 seconds ⚡</option>
-                        <option value="90" selected="">90 seconds 🏃</option>
-                        <option value="120">120 seconds 🚶</option>
-                        <option value="180">180 seconds 🐌</option>
-                    </select>
-                </div>
+                
+           
+<!-- Round Duration -->
+<div class="relative">
+  <label class="block text-white font-bold mb-3 text-lg flex items-center space-x-2">
+    <span>⏱️</span>
+    <span>Round Duration</span>
+  </label>
+  <input
+  type="number"
+  id="roundDuration"
+  placeholder="in sec"
+  min="10"
+  max="600"
+  class="input-custom-number w-full focus:outline-none transition-all duration-300 hover:shadow-lg"
+  required
+/>
+</div>
+
+
                 
                 <!-- Submit Button -->
                 <button type="submit" class="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black font-bold py-5 px-8 rounded-2xl text-xl transition-all duration-300 transform hover:scale-105 shadow-xl bounce-hover flex items-center justify-center space-x-3 mt-8">

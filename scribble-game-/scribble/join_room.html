@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Join Room</title>
+  <link rel="stylesheet" href="tailwind.min.css">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body class="bg-gray-950 text-white min-h-screen flex items-center justify-center p-6">
+
+  <div class="bg-gradient-to-br from-gray-800 to-black p-8 rounded-3xl shadow-2xl w-full max-w-xl border-4 border-blue-400 scribble-border">
+    <h1 class="text-yellow-300 text-3xl font-bold mb-6 text-center">🔗 Join Room</h1>
+
+    <!-- Room Name Display (pre-filled from URL) -->
+    <div class="mb-5">
+      <label class="block mb-2 font-bold text-lg">Room Name:</label>
+      <input type="text" id="roomName" class="w-full bg-purple-900 border-3 border-purple-500 text-white font-bold px-4 py-3 rounded-xl" readonly>
+    </div>
+
+    <!-- Room Code -->
+    <div class="mb-5">
+      <label class="block mb-2 font-bold text-lg">Room Code:</label>
+      <input type="number" id="roomCode" placeholder="Enter 6-digit code" class="w-full bg-yellow-900 border-3 border-yellow-500 text-white font-bold px-4 py-3 rounded-xl placeholder-white appearance-none">
+    </div>
+    <!-- Room Password -->
+<div class="mb-5">
+  <label class="block mb-2 font-bold text-lg">Room Password:</label>
+  <input type="password" id="roomPassword" placeholder="Enter room password"
+    class="w-full bg-red-900 border-3 border-red-500 text-white font-bold px-4 py-3 rounded-xl placeholder-white" />
+</div>
+
+
+    <!-- Player Name -->
+    <div class="mb-5">
+      <label class="block mb-2 font-bold text-lg">Your Name:</label>
+      <input type="text" id="playerName" placeholder="Enter your name" class="w-full bg-blue-900 border-3 border-blue-500 text-white font-bold px-4 py-3 rounded-xl placeholder-white">
+    </div>
+
+    <!-- Join Lobby Button -->
+    <button onclick="joinRoom()" class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-4 rounded-xl transition-all duration-300">➡️ Join Lobby</button>
+  </div>
+
+  <script src="join_room.js"></script>
+</body>
+</html>
