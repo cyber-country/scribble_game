@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Create Room</title>
- <link rel="stylesheet" href="tailwind.min.css">
-<link rel="stylesheet" href="index.css"> <!-- ← Required -->
+ <link rel="stylesheet" href="../tailwind.min.css">
+<link rel="stylesheet" href="../assets/style.css"> 
 
 </head>
 <body class="bg-gray-950 text-white min-h-screen flex items-center justify-center p-6">
@@ -26,27 +26,27 @@
 
 
     <!-- Room Code -->
-    <div class="mb-5">
+    <!-- <div class="mb-5">
       <label class="block mb-2 font-bold text-lg">Room Code:</label>
       <div class="flex">
         <input type="text" id="roomCode" class="w-full bg-yellow-900 border-3 border-yellow-500 text-white font-bold px-4 py-3 rounded-l-xl" readonly>
         <button id="copyRoomCodeBtn" class="bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-4 rounded-r-xl">📋</button>
       </div>
-    </div>
+    </div> -->
     <!-- Room Password (numeric only) -->
-<div class="mb-5">
+<!-- <div class="mb-5">
   <label class="block mb-2 font-bold text-lg">Room Password:</label>
   <input type="number" id="roomPassword" placeholder="e.g., 1234" min="0"
     class="w-full bg-red-900 border-3 border-red-500 text-white font-bold px-4 py-3 rounded-xl placeholder-white appearance-none" />
-</div>
+</div> -->
 
 <!-- Total Rounds -->
 <div class="mb-5">
-  <label class="block mb-2 font-bold text-lg">Total Rounds:</label>
+  <label class="block mb-2 font-bold text-lg">Total Gameplay Time:</label>
   <input
     type="number"
     id="roundCount"
-    placeholder="e.g. 5"
+    placeholder="in minutes"
     min="1"
     max="20"
     class="w-full bg-orange-900 border-3 border-orange-500 text-white font-bold px-4 py-3 rounded-xl focus:outline-none focus:border-orange-300 text-lg placeholder-white appearance-none"
@@ -56,11 +56,11 @@
 
 <!-- Total Rounds -->
 <div class="mb-5">
-  <label class="block mb-2 font-bold text-lg">Total Rounds:</label>
+  <label class="block mb-2 font-bold text-lg">Per Round Time:</label>
   <input
     type="number"
     id="roundCount"
-    placeholder="e.g. 5"
+    placeholder="in seconds"
     min="1"
     max="20"
     inputmode="numeric"
@@ -73,16 +73,16 @@
 
 
     <!-- Host Name -->
-    <div class="mb-5">
+    <!-- <div class="mb-5">
       <label class="block mb-2 font-bold text-lg">Your Name:</label>
       <input type="text" id="hostName" placeholder="Enter your name" class="w-full bg-blue-900 border-3 border-blue-500 text-white font-bold px-4 py-3 rounded-xl">
-    </div>
+    </div> -->
 
     <!-- Start Button -->
     <button onclick="startGame()" class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-4 rounded-xl transition-all duration-300">
   🎮 Enter Lobby
 </button>
 
-  <script src="./create_room.js"></script>
+  <script src="./assets/script.js"></script>
 </body>
 </html>
