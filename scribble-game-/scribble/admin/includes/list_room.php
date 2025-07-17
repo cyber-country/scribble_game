@@ -1,5 +1,5 @@
 <?php
-include '../db.php';
+// require_once "./includes/db.php";
 
 // Fetch rooms where game_started is 1 or 2
 $query = "SELECT * FROM rooms WHERE game_started IN (1, 2) ORDER BY created_at DESC";
@@ -17,7 +17,7 @@ $result = mysqli_query($conn, $query);
                 
                 <!-- Display room details -->
                 <?php if ($room['game_started'] == 2) { ?>
-                <li onclick="selectRoom($room['room_code'])" class="cursor-pointer room-card bg-yellow border-4 border-yellow-300 rounded-xl px-6 py-4">
+                <li class="cursor-pointer room-card bg-yellow border-4 border-yellow-300 rounded-xl px-6 py-4">
                     <div class="flex justify-between items-center">
                         <div>
                             <h2 class="text-white font-bold text-xl"><?php echo htmlspecialchars($room['room_name']); ?></h2>
@@ -39,7 +39,7 @@ $result = mysqli_query($conn, $query);
                 </li>
 
                 <?php }else { ?>
-                    <li onclick="selectRoom($room['room_code'])" class="cursor-pointer room-card bg-green-900 border-4 border-green-500 rounded-xl px-6 py-4">
+                    <li class="cursor-pointer room-card bg-green-900 border-4 border-green-500 rounded-xl px-6 py-4">
                         <div class="flex justify-between items-center">
                             <div>
                                 <h2 class="text-white font-bold text-xl"><?php echo htmlspecialchars($room['room_name']); ?></h2>

@@ -2,8 +2,6 @@
 // connect to database
 include 'db.php';
 
-echo "Game Status Update";
-
 if (isset($_GET['room']) && isset($_GET['status'])) {
 
     $room = intval($_GET['room']);

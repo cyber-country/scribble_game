@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../db.php";
+require_once "./includes/db.php";
 
 if (!isset($_SESSION['admin'])) {
     header("Location: ./includes/login.php");
@@ -13,8 +13,9 @@ if (!isset($_SESSION['admin'])) {
 <head>
   <meta charset="UTF-8" />
   <title>Join Room - Room List</title>
-  <link rel="stylesheet" href="tailwind.min.css" />
-  <link rel="stylesheet" href="index.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../tailwind.min.css" />
+  <link rel="stylesheet" href="../assets/style.css" />
   <style>
     .room-card {
       transition: transform 0.2s ease, box-shadow 0.3s ease;

@@ -9,13 +9,16 @@
 
     </div>
 
-        <!-- Main Container -->
-        <div class="bg-gradient-to-br from-gray-800 to-black p-8 pt-20 rounded-3xl shadow-2xl w-full max-w-xl border-4 border-yellow-400 scribble-border">
+    <!-- Main Container -->
+    <div class="bg-gradient-to-br from-gray-800 to-black p-8 rounded-3xl shadow-2xl w-full max-w-xl border-4 border-yellow-400 scribble-border">
 
-            <!-- Room List Page -->
-            <?php include './includes/rooms.php'; ?>
+        <!-- Room List Page -->
+        <?php include './includes/rooms.php'; ?>
 
-        </div>
+    </div>
+
+    <!-- Include the modal from another file -->
+    <?php include './includes/join_room.php'; ?>
 
 <?php include './includes/footer.php'; ?>
         
