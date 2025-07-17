@@ -5,9 +5,14 @@ const modal = document.getElementById('createRoomModal');
 const modalContent = document.getElementById('modalContent');
 const closeModal = document.getElementById('closeModal');
 
-// Show Create Room modal (not used anymore if you go to separate page)
+// Show Create Room modal
 createRoomBtn.addEventListener('click', function () {
-  window.location.href = './admin/dashboard.php'; // Updated to go to new page
+  window.location.href = './admin/dashboard.php'; 
+});
+
+// Show Join Room modal
+joinRoomBtn.addEventListener('click', function () {
+  window.location.href = './user/join_room_list.php'; 
 });
 
 // Close modal (if modal still exists in code)
@@ -36,9 +41,9 @@ const joinRoomModal = document.getElementById('joinRoomModal');
 const closeJoinModal = document.getElementById('closeJoinModal');
 const joinRoomForm = document.getElementById('joinRoomForm');
 
-joinRoomBtn.addEventListener('click', () => {
-  window.location.href = "join_room_list.html"; // ← new direct flow
-});
+// joinRoomBtn.addEventListener('click', () => {
+//   window.location.href = "join_room_list.html"; // ← new direct flow
+// });
 
 function closeJoinRoomModal() {
   joinRoomModal.querySelector('.modal-slide').classList.remove('show');
