@@ -18,7 +18,7 @@
     </div>
 
     <!-- Include the modal from another file -->
-    <?php include './includes/join_room.php'; ?>
+    <?php // include './includes/join_room.php'; ?>
 
 <?php include './includes/footer.php'; ?>
         
