@@ -1,6 +1,8 @@
 
 <?php include './includes/header.php'; ?>
-
+    
+    <body class="bg-gray-950 text-white min-h-screen flex items-center justify-center p-6">
+        
     <!-- Back to Home -->
     <div class="fixed top-0 left-0 w-full flex justify-between items-center p-4 bg-gray-800 shadow z-50">
                 

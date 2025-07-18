@@ -15,7 +15,7 @@ if (!isset($_SESSION['admin'])) {
   <title>Join Room - Room List</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="../tailwind.min.css" />
-  <link rel="stylesheet" href="../assets/style.css" />
+  <link rel="stylesheet" href="./assets/style.css" />
   <style>
     .room-card {
       transition: transform 0.2s ease, box-shadow 0.3s ease;
@@ -37,4 +37,3 @@ if (!isset($_SESSION['admin'])) {
     }
   </style>
 </head>
-<body class="bg-gray-950 text-white min-h-screen flex items-center justify-center p-6">

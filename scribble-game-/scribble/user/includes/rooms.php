@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['join_room'])) {
         $roomCheck->fetch();
         $roomCheck->close();
 
-        if ($game_started == 1 || $game_started == 2) {
+        if ($game_started == 2) {
             echo "<script>alert('The player name is already taken and game has already started.'); history.back();</script>";
             exit;
         } else {
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['join_room'])) {
             $update = $conn->prepare("UPDATE players SET room_id = ? WHERE player_name = ?");
             $update->bind_param("is", $room_id, $player_name);
             $update->execute();
-            echo "<script>alert('Player re-assigned to new room.'); window.location.href='lobby.php';</script>";
+            echo "<script>alert('Player re-assigned to new room.'); window.location.href='lobby.php?room_id={$room_id}';</script>";
             exit;
         }
 
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['join_room'])) {
         $insert = $conn->prepare("INSERT INTO players (player_name, room_id) VALUES (?, ?)");
         $insert->bind_param("si", $player_name, $room_id);
         $insert->execute();
-        echo "<script>alert('Player joined successfully!'); window.location.href='lobby.php';</script>";
+        echo "<script>alert('Player joined successfully!'); window.location.href='lobby.php?room_id={$room_id}';</script>";
         exit;
     }
 $stmt->close();
