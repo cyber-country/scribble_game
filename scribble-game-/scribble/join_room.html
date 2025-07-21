@@ -3,44 +3,94 @@
 <head>
   <meta charset="UTF-8">
   <title>Join Room</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="tailwind.min.css">
-  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .animated-bg {
+      background: linear-gradient(-45deg, #fde68a, #ffdf3e, #93c5fd, #a5f3fc, #60a5fa, #3b82f6);
+      background-size: 500% 500%;
+      animation: gradientFlow 12s ease infinite;
+    }
+  </style>
 </head>
-<body class="bg-gray-950 text-white min-h-screen flex items-center justify-center p-6">
+<body class="animated-bg min-h-screen p-6 text-neutral-800 font-sans overflow-hidden relative">
 
-  <div class="bg-gradient-to-br from-gray-800 to-black p-8 rounded-3xl shadow-2xl w-full max-w-xl border-4 border-blue-400 scribble-border">
-  <h1 class="title-font text-yellow-300 text-4xl mb-6 text-center">
-  🔗 Join Room
-</h1>
+  <!-- 🌟 Form Wrapper -->
+  <div class="relative z-10 flex items-center justify-center min-h-screen">
+    <div class="w-full max-w-xl p-10 rounded-3xl shadow-2xl border-2 border-white backdrop-blur-xl bg-white/70 transition-all duration-500">
+      <h1 class="title-font text-blue-800 text-5xl mb-8 text-center font-black tracking-wide leading-tight">
+        🔗 Join Room
+      </h1>
 
+      <!-- Room Name -->
+      <div class="mb-5">
+        <label class="block mb-2 font-bold text-lg text-indigo-700">Room Name:</label>
+        <input type="text" id="roomName" readonly class="w-full bg-white/80 text-neutral-800 px-4 py-3 rounded-xl border border-indigo-300 font-bold focus:outline-none" />
+      </div>
 
-    <!-- Room Name Display (pre-filled from URL) -->
-    <div class="mb-5">
-      <label class="block mb-2 font-bold text-lg">Room Name:</label>
-      <input type="text" id="roomName" class="w-full bg-purple-900 border-3 border-purple-500 text-white font-bold px-4 py-3 rounded-xl" readonly>
+      <!-- Room Code -->
+      <div class="mb-5">
+        <label class="block mb-2 font-bold text-lg text-yellow-600">Room Code:</label>
+        <input type="number" id="roomCode" placeholder="Enter 6-digit code" class="w-full bg-white/80 text-neutral-800 px-4 py-3 rounded-xl border border-yellow-400 font-bold placeholder-neutral-500 appearance-none" />
+      </div>
+
+      <!-- Password -->
+      <div class="mb-5">
+        <label class="block mb-2 font-bold text-lg text-red-600">Room Password:</label>
+        <input type="password" id="roomPassword" placeholder="Enter room password" class="w-full bg-white/80 text-neutral-800 px-4 py-3 rounded-xl border border-red-400 font-bold placeholder-neutral-500" />
+      </div>
+
+      <!-- Player Name -->
+      <div class="mb-5">
+        <label class="block mb-2 font-bold text-lg text-blue-600">Your Name:</label>
+        <input type="text" id="playerName" placeholder="Enter your name" class="w-full bg-white/80 text-neutral-800 px-4 py-3 rounded-xl border border-blue-400 font-bold placeholder-neutral-500" />
+      </div>
+
+      <!-- Join Button -->
+      <button onclick="joinRoom()" class="w-full bg-gradient-to-r from-yellow-400 via-pink-500 to-blue-500 text-white font-bold py-4 rounded-xl transition duration-300 hover:scale-105">
+        ➡️ Join Lobby
+      </button>
     </div>
+  </div>
 
-    <!-- Room Code -->
-    <div class="mb-5">
-      <label class="block mb-2 font-bold text-lg">Room Code:</label>
-      <input type="number" id="roomCode" placeholder="Enter 6-digit code" class="w-full bg-yellow-900 border-3 border-yellow-500 text-white font-bold px-4 py-3 rounded-xl placeholder-white appearance-none">
-    </div>
-    <!-- Room Password -->
-<div class="mb-5">
-  <label class="block mb-2 font-bold text-lg">Room Password:</label>
-  <input type="password" id="roomPassword" placeholder="Enter room password"
-    class="w-full bg-red-900 border-3 border-red-500 text-white font-bold px-4 py-3 rounded-xl placeholder-white" />
-</div>
+  <!-- 🎨 DOODLE LAYER (Responsive + Balanced Layout) -->
+  <div class="absolute inset-0 z-0 pointer-events-none">
+    <!-- Top row -->
+    <span class="doodle float-animation text-4xl absolute opacity-80" style="top: 5%; left: 5%;">✏️</span>
+    <span class="doodle wiggle-animation text-3xl absolute" style="top: 5%; left: 45%;">🖌️</span>
+    <span class="doodle float-animation text-4xl absolute opacity-70" style="top: 5%; right: 8%;">📘</span>
 
+    <!-- Mid row (left/right) -->
+    <span class="doodle wiggle-animation text-2xl absolute" style="top: 30%; left: 2%;">🎨</span>
+    <span class="doodle float-animation text-5xl absolute" style="top: 30%; right: 4%;">🧠</span>
 
-    <!-- Player Name -->
-    <div class="mb-5">
-      <label class="block mb-2 font-bold text-lg">Your Name:</label>
-      <input type="text" id="playerName" placeholder="Enter your name" class="w-full bg-blue-900 border-3 border-blue-500 text-white font-bold px-4 py-3 rounded-xl placeholder-white">
-    </div>
+    <!-- Mid-top diagonals -->
+    <span class="doodle wiggle-animation text-3xl absolute opacity-70" style="top: 20%; left: 20%;">🖍️</span>
+    <span class="doodle float-animation text-2xl absolute opacity-80" style="top: 25%; right: 20%;">📂</span>
 
-    <!-- Join Lobby Button -->
-    <button onclick="joinRoom()" class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-4 rounded-xl transition-all duration-300">➡️ Join Lobby</button>
+    <!-- Mid-bottom diagonals -->
+    <span class="doodle float-animation text-4xl absolute" style="top: 55%; left: 18%;">📒</span>
+    <span class="doodle wiggle-animation text-2xl absolute opacity-70" style="top: 55%; right: 18%;">📍</span>
+
+    <!-- Bottom row -->
+    <span class="doodle float-animation text-3xl absolute" style="bottom: 5%; left: 7%;">📌</span>
+    <span class="doodle wiggle-animation text-4xl absolute" style="bottom: 5%; left: 45%;">🪄</span>
+    <span class="doodle float-animation text-4xl absolute opacity-80" style="bottom: 5%; right: 10%;">📝</span>
+
+    <!-- Extra organic spacing -->
+    <span class="doodle wiggle-animation text-2xl absolute" style="top: 75%; left: 10%;">📘</span>
+    <span class="doodle float-animation text-3xl absolute" style="top: 68%; right: 12%;">🎭</span>
+    <span class="doodle wiggle-animation text-3xl absolute" style="top: 42%; left: 48%;">🪄</span>
+    <span class="doodle float-animation text-2xl absolute opacity-70" style="bottom: 20%; left: 30%;">✏️</span>
+    <span class="doodle wiggle-animation text-3xl absolute" style="bottom: 15%; right: 30%;">📒</span>
   </div>
 
   <script src="join_room.js"></script>

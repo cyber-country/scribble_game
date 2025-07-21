@@ -1,64 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Waiting Room</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="index.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    .glow-border {
-      box-shadow: 0 0 15px #a855f7, 0 0 25px #7e22ce;
-      border: 2px solid #c084fc;
+    /* 🔄 Animated Gradient Background */
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
-    .player-badge {
-      display: inline-block;
-      margin-left: 8px;
-      padding: 2px 8px;
-      border-radius: 9999px;
-      font-size: 0.75rem;
-      font-weight: bold;
-    }
-    .host-badge {
-      background: linear-gradient(to right, #c084fc, #a855f7);
-      color: white;
-      animation: pulse 1.5s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+
+    .animated-bg {
+      background: linear-gradient(-45deg, #fde68a, #ffdf3e, #93c5fd, #a5f3fc, #60a5fa, #3b82f6);
+      background-size: 500% 500%;
+      animation: gradientFlow 12s ease infinite;
     }
   </style>
 </head>
-<body class="bg-gray-950 text-white min-h-screen flex items-center justify-center p-6 relative">
+<body class="animated-bg min-h-screen flex items-center justify-center p-6 text-gray-900 font-sans overflow-hidden">
 
-  <!-- Fun Doodles -->
-  <div class="doodle top-10 left-10 text-6xl float-animation">🎨</div>
-  <div class="doodle bottom-10 right-10 text-5xl wiggle-animation" style="animation-delay: 1s;">✏️</div>
+  <!-- 🎨 Waiting Room Container -->
+  <div class="relative w-full max-w-2xl p-10 rounded-3xl shadow-2xl border-2 border-white backdrop-blur-xl bg-white/60 text-slate-900 transition-all duration-500">
+    
+    <!-- ✨ Header -->
+    <h1 class="text-6xl font-black text-center mb-8 text-blue-800 drop-shadow-lg tracking-wide leading-tight">
+      ⏳ Waiting Room
+    </h1>
 
-  <div class="bg-gradient-to-br from-gray-800 to-black p-8 rounded-3xl shadow-2xl w-full max-w-2xl border-4 border-yellow-400 scribble-border">
-    <h1 class="text-yellow-300 text-4xl title-font mb-4 text-center">⏳ Waiting Room</h1>
-
-    <div class="mb-6 text-center">
-      <p class="text-lg"><strong>Room:</strong> <span id="roomName"></span></p>
-      <p class="text-lg"><strong>Code:</strong> <span id="roomCode"></span></p>
-      <p class="text-lg"><strong>Duration:</strong> <span id="roundDuration"></span> sec</p>
-      <p class="text-lg"><strong>Password:</strong> <span id="roomPassword"></span></p>
+    <!-- 📋 Room Details -->
+    <div class="mb-6 text-center space-y-2 text-indigo-500 font-medium tracking-wide">
+      <p class="text-lg">
+        <strong class="text-amber-500">Room:</strong>
+        <span id="roomName" class="text-gray-100"></span>
+      </p>
+      <p class="text-lg">
+        <strong class="text-amber-500">Code:</strong>
+        <span id="roomCode" class="text-gray-100"></span>
+      </p>
+      <p class="text-lg">
+        <strong class="text-amber-500">Duration:</strong>
+        <span id="roundDuration" class="text-gray-100"></span> sec
+      </p>
+      <p class="text-lg">
+        <strong class="text-amber-500">Password:</strong>
+        <span id="roomPassword" class="text-gray-100"></span>
+      </p>
     </div>
 
+    <!-- 👥 Players -->
     <div class="mb-8">
-      <h2 class="text-2xl font-bold text-blue-300 mb-3">👥 Players Joined (<span id="playerCount">0</span>)</h2>
-      <ul id="playerList" class="space-y-2 text-lg">
-        <!-- Populated by JS -->
+      <h2 class="text-2xl font-bold text-blue-600 mb-3">👥 Players Joined (<span id="playerCount">0</span>)</h2>
+      <ul id="playerList" class="space-y-3 max-h-72 overflow-y-auto pr-2">
+        <!-- Host with Edit -->
+        <li class="px-4 py-3 rounded-xl flex items-center justify-between bg-purple-600 text-white font-bold shadow-md">
+          <span>@HostName</span>
+          <span class="flex items-center gap-2">
+            <span class="bg-blue-600 text-white px-3 py-1 text-xs font-bold rounded-full">Host ✨</span>
+            <button class="text-xs text-blue-100 underline hover:text-white">Edit</button>
+          </span>
+        </li>
+        <!-- Simulated Players -->
+        <li class="px-4 py-3 rounded-xl flex items-center justify-between bg-white text-gray-800 border border-gray-300 shadow-sm">
+          <span>@DoodleFan</span>
+        </li>
+        <li class="px-4 py-3 rounded-xl flex items-center justify-between bg-white text-gray-800 border border-gray-300 shadow-sm">
+          <span>@SketchStar</span>
+        </li>
+        <li class="px-4 py-3 rounded-xl flex items-center justify-between bg-white text-gray-800 border border-gray-300 shadow-sm">
+          <span>@ColorSplash</span>
+        </li>
       </ul>
     </div>
 
-    <button id="startGameBtn" class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-4 rounded-xl transition duration-300">
+    <!-- 🚀 Start Button -->
+    <button id="startGameBtn" class="w-full bg-gradient-to-r from-yellow-400 via-pink-500 to-blue-500 text-white font-bold py-4 rounded-xl transition duration-300 hover:scale-105">
       🚀 Start Game
     </button>
   </div>
+    </div> <!-- End of form container -->
+
+  <!-- 🎨 Doodles -->
+<!-- 🎨 Irregular Doodles -->
+<div class="absolute inset-0 z-0 pointer-events-none">
+    <span class="doodle float-animation text-4xl absolute" style="top: 5%; left: 7%;">✏️</span>
+    <span class="doodle wiggle-animation text-3xl absolute" style="top: 20%; right: 12%;">🖌️</span>
+    <span class="doodle float-animation text-5xl absolute" style="top: 35%; left: 10%;">🧠</span>
+    <span class="doodle wiggle-animation text-4xl absolute" style="bottom: 25%; right: 15%;">🎭</span>
+    <span class="doodle float-animation text-3xl absolute" style="top: 6%; left: 50%;">🎨</span>
+    <span class="doodle wiggle-animation text-2xl absolute" style="bottom: 15%; left: 20%;">📌</span>
+    <span class="doodle float-animation text-4xl absolute" style="bottom: 8%; right: 80%;">📒</span>
+    <span class="doodle wiggle-animation text-3xl absolute" style="top: 45%; right: 5%;">🪄</span>
+    <span class="doodle float-animation text-3xl absolute" style="bottom: 5%; left: 80%;">📝</span>
+  </div>
+
 
   <script>
+    // 🌐 Room Info
     const params = new URLSearchParams(window.location.search);
     const roomName = params.get("roomName") || "Unknown Room";
     const roomCode = params.get("room") || "------";
@@ -66,30 +107,12 @@
     const password = params.get("password") || "****";
     const hostName = params.get("name") || "Host";
 
-    // Display room info
     document.getElementById("roomName").textContent = roomName;
     document.getElementById("roomCode").textContent = roomCode;
     document.getElementById("roundDuration").textContent = duration;
     document.getElementById("roomPassword").textContent = password;
 
-    // Simulated Players (host + others)
-    const players = [hostName, "@DoodleFan", "@SketchStar", "@ColorSplash"];
-    const playerList = document.getElementById("playerList");
-    const playerCount = document.getElementById("playerCount");
-
-    playerCount.textContent = players.length;
-
-    players.forEach((player, i) => {
-      const li = document.createElement("li");
-      li.className = `px-4 py-3 rounded-xl flex items-center justify-between ${i === 0 ? 'bg-purple-800 glow-border font-bold text-white' : 'bg-gray-800 border border-gray-600'}`;
-      li.innerHTML = `<span>${player}</span>` + (i === 0 ? `<span class='player-badge host-badge'>Host ✨</span>` : "");
-      playerList.appendChild(li);
-    });
-
-    // Redirect to game
-    document.getElementById("startGameBtn").addEventListener("click", () => {
-      window.location.href = "main_lobby.html";
-    });
+    document.getElementById("playerCount").textContent = 4;
   </script>
 </body>
 </html>
