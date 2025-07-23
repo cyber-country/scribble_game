@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Scribble Game Arena</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+      overflow-y: auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      position: relative;
+      background: url('scribblemain.png') repeat center center fixed;
+      background-size: 900px;
+      flex: 1;
+      width: 100%;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+
+    .border-wrapper {
+      padding: 6px;
+      background: linear-gradient(to right, black, #facc15, black);
+      border-radius: 1.5rem;
+    }
+
+    .inner-box {
+      background: linear-gradient(to bottom right, #1f2937, #000);
+      border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar {
+      width: 0;
+    }
+  </style>
+</head>
+
+<body class="text-white">
+
+  <!-- Header -->
+  <header class="bg-yellow-500 p-6 text-center shadow-xl relative z-10" style="background: linear-gradient(to right, #facc15, #f97316);">
+    <h1 class="text-4xl font-bold text-black">🎮 Scribble Game Arena</h1>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex justify-center items-center">
+    <div class="border-wrapper w-full max-w-7xl relative z-10">
+      <div class="inner-box p-4 sm:p-6 rounded-2xl shadow-2xl flex flex-col lg:flex-row gap-6 flex-wrap">
+
+        <!-- Drawing Section -->
+        <div class="flex flex-col flex-1 items-center gap-4 min-w-[300px]">
+
+          <!-- Tools -->
+          <div class="flex flex-wrap gap-4 justify-center">
+            <input type="color" id="colorPicker" value="#000000" class="w-16 h-12 border-4 border-purple-500 bg-purple-900 rounded-xl">
+            <input type="range" id="brushSize" min="1" max="20" value="3" class="w-40 h-2 bg-orange-900 border-4 border-orange-500 rounded-xl">
+            <button onclick="clearCanvas()" class="bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-4 py-2 rounded-xl shadow">🧽 Clear</button>
+          </div>
+
+          <!-- Canvas -->
+          <canvas id="canvas" class="w-full h-auto aspect-video bg-white rounded-xl border-4 border-yellow-400 shadow-lg max-w-full"></canvas>
+
+          <!-- Info Boxes -->
+          <div class="flex flex-wrap justify-center gap-4 mt-2 w-full">
+            <div class="bg-yellow-400 text-black font-bold text-lg px-6 py-3 rounded-xl border-4 border-white min-w-[200px] text-center">
+              🔍 Hint: <span id="hintDisplay">_ _ _ _ _</span>
+            </div>
+            <div class="bg-yellow-400 text-black font-bold text-lg px-6 py-3 rounded-xl border-4 border-white min-w-[200px] text-center">
+              ⏳ Time: <span id="timeLeft">30</span> sec
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat Section -->
+        <div class="bg-gradient-to-br from-blue-900 to-gray-900 border-4 border-blue-500 rounded-3xl p-4 w-full max-w-md flex flex-col flex-grow">
+          <h3 class="text-yellow-300 text-2xl font-bold mb-2 text-center">💬 Chat & Guess</h3>
+          <div id="chatMessages" class="flex-1 bg-white text-black rounded-xl p-3 mb-3 overflow-y-auto border-2 border-blue-300 h-60 space-y-2">
+            <div class="flex justify-center">
+              <div class="bg-gray-400 text-black px-4 py-2 rounded-xl text-sm shadow">System: Game starting soon...</div>
+            </div>
+          </div>
+          <div class="flex w-full">
+            <input type="text" id="chatInput" placeholder="Type your guess..." class="flex-1 bg-blue-900 text-white placeholder-white font-bold px-4 py-2 rounded-l-xl border-2 border-blue-400 focus:outline-none">
+            <button onclick="sendChat()" class="bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-4 py-2 rounded-r-xl">Send</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Leaderboard Modal -->
+  <div id="leaderboardModal" class="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50 hidden">
+    <div class="bg-gradient-to-br from-gray-800 to-black p-8 rounded-3xl shadow-2xl border-4 border-yellow-400 w-full max-w-xl text-center">
+      <h2 class="text-yellow-300 text-3xl font-bold mb-4">🏆 Leaderboard</h2>
+      <ul id="leaderboardList" class="text-white space-y-2 text-lg font-semibold"></ul>
+      <button onclick="closeLeaderboard()" class="mt-6 bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-2 rounded-xl font-bold shadow">
+        Close
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-black text-yellow-400 text-center py-3 mt-auto">
+    Created by BCA Team
+    <div id="typingNames" class="text-white font-bold mt-1"></div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    let drawing = false;
+    const colorPicker = document.getElementById("colorPicker");
+    const brushSize = document.getElementById("brushSize");
+
+    function resizeCanvas() {
+      const containerWidth = canvas.parentElement.clientWidth;
+      canvas.width = containerWidth;
+      canvas.height = containerWidth * 0.66; // Maintain 3:2 ratio
+    }
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    canvas.addEventListener("mousedown", (e) => {
+      drawing = true;
+      ctx.beginPath();
+      ctx.moveTo(e.offsetX, e.offsetY);
+    });
+
+    canvas.addEventListener("mousemove", (e) => {
+      if (!drawing) return;
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.strokeStyle = colorPicker.value;
+      ctx.lineWidth = brushSize.value;
+      ctx.lineCap = "round";
+      ctx.stroke();
+    });
+
+    canvas.addEventListener("mouseup", () => drawing = false);
+    canvas.addEventListener("mouseleave", () => drawing = false);
+
+    function clearCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function sendChat() {
+      const input = document.getElementById('chatInput');
+      const msg = input.value.trim();
+      if (!msg) return;
+      const chatBox = document.getElementById('chatMessages');
+
+      const msgWrapper = document.createElement('div');
+      msgWrapper.className = "flex justify-end";
+
+      const bubble = document.createElement('div');
+      bubble.className = "bg-green-500 text-white px-4 py-2 rounded-xl max-w-xs break-words shadow-md";
+      bubble.textContent = msg;
+
+      msgWrapper.appendChild(bubble);
+      chatBox.appendChild(msgWrapper);
+      input.value = '';
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    const hintWord = "apple";
+    const revealed = [false, false, true, false, false];
+
+    function updateHint() {
+      const hint = hintWord
+        .split("")
+        .map((char, i) => (revealed[i] ? char.toUpperCase() : "_"))
+        .join(" ");
+      document.getElementById("hintDisplay").textContent = hint;
+    }
+    updateHint();
+
+    const typingNames = [
+      "Rohit Pandit", "R Santoshwaran", "Bhumi Ghosh",
+      "Dristi Sarkar", "Faculty: Mr. Tanmoy Ghosh"
+    ];
+
+    const leaderboardPlayers = [
+      { name: "Player A", score: 90 },
+      { name: "Player B", score: 82 },
+      { name: "Player C", score: 78 },
+      { name: "Player D", score: 75 },
+      { name: "Player E", score: 70 },
+      { name: "Player F", score: 68 },
+      { name: "Player G", score: 65 },
+      { name: "Player H", score: 62 },
+      { name: "Player I", score: 60 },
+      { name: "Player J", score: 58 }
+    ];
+
+    function showLeaderboard() {
+      const leaderboard = document.getElementById("leaderboardList");
+      leaderboard.innerHTML = "";
+      leaderboardPlayers
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 10)
+        .forEach((player, index) => {
+          const li = document.createElement("li");
+          li.innerHTML = `#${index + 1} <span class="text-yellow-300">${player.name}</span> - ${player.score} pts`;
+          leaderboard.appendChild(li);
+        });
+      document.getElementById("leaderboardModal").classList.remove("hidden");
+    }
+
+    function closeLeaderboard() {
+      document.getElementById("leaderboardModal").classList.add("hidden");
+    }
+
+    let time = 30;
+    const timeEl = document.getElementById("timeLeft");
+    const timer = setInterval(() => {
+      if (time > 0) {
+        time--;
+        timeEl.textContent = time;
+      } else {
+        clearInterval(timer);
+        showLeaderboard();
+      }
+    }, 1000);
+
+    const typingDiv = document.getElementById("typingNames");
+    let nameIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function typeNames() {
+      const currentName = typingNames[nameIndex];
+      if (!isDeleting) {
+        typingDiv.textContent = currentName.substring(0, charIndex++);
+        if (charIndex > currentName.length) {
+          isDeleting = true;
+          setTimeout(typeNames, 2000);
+          return;
+        }
+      } else {
+        typingDiv.textContent = currentName.substring(0, charIndex--);
+        if (charIndex < 0) {
+          isDeleting = false;
+          nameIndex = (nameIndex + 1) % typingNames.length;
+        }
+      }
+      setTimeout(typeNames, 100);
+    }
+    typeNames();
+  </script>
+</body>
+</html>
